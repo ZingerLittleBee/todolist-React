@@ -37,6 +37,9 @@ branch: `todolist-componentization`
 
 
 ## 代码优化
+
+branch: `todolist-optimize`
+
 - `this`指向的绑定写在`constructor`中会有性能的优化
 - `setState(Function)`传递函数使方法变成异步方法
     - 在异步函数中直接使用`e.target.value`会出现问题，需要先创建新的变量保存该值
