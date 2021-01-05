@@ -4,8 +4,8 @@
  * @describe
  */
 import React, { Component, Fragment } from 'react'
-import './style.css'
 import TodoItem from "./TodoItem";
+import './style.css'
 
 class TodoList extends Component {
 
@@ -15,6 +15,9 @@ class TodoList extends Component {
       inputValue: '',
       list: []
     }
+    this.handlerInputChange = this.handlerInputChange.bind(this)
+    this.handlerButtonClick = this.handlerButtonClick.bind(this)
+    this.handlerItemDelete = this.handlerItemDelete.bind(this)
   }
 
   render() {
@@ -26,46 +29,47 @@ class TodoList extends Component {
             id='insertArea'
             className='input'
             value={this.state.inputValue}
-            onChange={this.handlerInputChange.bind(this)}
+            onChange={this.handlerInputChange}
           />
-          <button onClick={this.handlerButtonClick.bind(this)}>提交</button>
+          <button onClick={this.handlerButtonClick}>提交</button>
         </div>
           <ul>
-            {
-              this.state.list.map((item, index) => {
-                return (
-                  <TodoItem
-                    item={item}
-                    index={index}
-                    handlerItemDelete={this.handlerItemDelete.bind(this)}
-                    key={index}
-                  />
-                )
-              })
-            }
+            {this.getTodoItem()}
           </ul>
       </Fragment>
     )
   }
 
-  handlerInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
-    })
-  }
-  handlerButtonClick() {
-    if (!this.state.inputValue) { return }
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
-      inputValue: ''
+  getTodoItem() {
+    return this.state.list.map((item, index) => {
+      return (
+        <TodoItem
+          item={item}
+          index={index}
+          handlerItemDelete={this.handlerItemDelete}
+          key={index}
+        />
+      )
     })
   }
 
+  handlerInputChange(e) {
+    const value = e.target.value
+    this.setState(() => ({ inputValue: value }))
+  }
+  handlerButtonClick() {
+    if (!this.state.inputValue) { return }
+    this.setState((prevState) => ({
+        list: [...prevState.list, prevState.inputValue],
+        inputValue: ''
+    }))
+  }
+
   handlerItemDelete(index) {
-    const list = [...this.state.list]
-    list.splice(index, 1)
-    this.setState({
-      list
+    this.setState((prevState) => {
+      const list = [...prevState.list]
+      list.splice(index, 1)
+      return { list }
     })
   }
 }

@@ -13,11 +13,17 @@ class TodoItem extends Component {
   }
 
   render() {
-    return <div onClick={this.handlerClick}>{this.props.item}</div>
+    const { item } = this.props
+    return (
+      <div onClick={this.handlerClick}>
+        {item}
+      </div>
+    )
   }
 
   handlerClick() {
-    this.props.handlerItemDelete(this.props.index)
+    const { index, handlerItemDelete } = this.props
+    handlerItemDelete(index)
   }
 
 }

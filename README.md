@@ -34,3 +34,11 @@ branch: `todolist-componentization`
 > 将`this`的指向绑定写进`constructor`之中会有性能的提升
 >
 > `constructor(props) { super(props); this.handlerClick = this.handlerClick.bind(this) }`
+
+
+## 代码优化
+- `this`指向的绑定写在`constructor`中会有性能的优化
+- `setState(Function)`传递函数使方法变成异步方法
+    - 在异步函数中直接使用`e.target.value`会出现问题，需要先创建新的变量保存该值
+- `setState((prevState) => ({ list: this.setState.list })`,`setState`之中可以接收一个为`prevState`的参数,`prevState`指的是修改数据之前的`state`(等价于`this.state`)
+- `() => { return { list } } 等价于 () => ({ list })`
