@@ -1,6 +1,6 @@
 # todolist React实现
 
-## 知识要点
+## 基础知识要点
 - `html`需要一个根标签包裹，如果不想使用额外的根标签，可以使用`<Fragment></Fragment>`作为根标签
 - `render()`函数中`return`的`html`标签分多行写，需要使用`()`包裹
 - `JSX` 中的 `JS` 表达式需要写在`{}`之中
@@ -14,3 +14,23 @@
 
 > 不变性推荐阅读
 >[[译]为什么对象不变性很重要？](https://zhuanlan.zhihu.com/p/130724120)
+
+## 组件化思想
+
+branch: `todolist-componentization`
+
+### 父子组件传值
+
+父 -> 子
+- 在子组件标签中以属性的形式传递，例如`<TodoItem item={item} />`
+- 子组件通过`this.props.item`接收父组件传递过来的值
+---
+子 -> 父
+
+通过调用父组件传递过来的方法，来操作父组件的值
+
+例如`<TodoItem handlerItemDelete={this.handlerItemDelete.bind(this)} />`
+
+> 将`this`的指向绑定写进`constructor`之中会有性能的提升
+>
+> `constructor(props) { super(props); this.handlerClick = this.handlerClick.bind(this) }`
